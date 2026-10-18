@@ -45,6 +45,9 @@ void CursorItem::setSurface(SurfaceInterface *surface, const QPointF &hotspot)
     }
     if (m_surfaceItem) {
         m_surfaceItem->setPosition(-hotspot);
+        // setPosition() only repaints when the position changes, so a new cursor
+        // surface with a (0, 0) hotspot would otherwise never be drawn.
+        m_surfaceItem->scheduleRepaint(m_surfaceItem->rect());
     }
 }
 
